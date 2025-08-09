@@ -1,5 +1,7 @@
 # SpringBoot MarkLogic Sample [![Build Status](https://travis-ci.org/nikos/springboot-marklogic-sample.svg?branch=master)](http://travis-ci.org/nikos/springboot-marklogic-sample)
 
+UPDATE (2015-04-27): If you are interested in a more complex / real-world example, you might want to checkout the [WM14](https://github.com/jojrg/wm14) demo application. This application is built on the same technology stack and similar ideas, but uses player (plus tweets by the players) and match data from the Soccer Worldcup 2014 in Brazil to demonstrate integrating a Java middle-tier. 
+
 ## Goal
 
 Build a simple (thin) web application with [Spring Boot](http://projects.spring.io/spring-boot/) to 
@@ -39,15 +41,16 @@ web application up and running.
 
 * [Install, start and setup](http://docs.marklogic.com/guide/installation/procedures#id_28962) your MarkLogic server instance,
    
-* [Create a database and an associated REST API instance](http://developer.marklogic.com/learn/rest/setup),
-  you might consider leveraging [Roxy](https://github.com/marklogic/roxy) enabling you to easily spin up a new
-  database and REST endpoint from the command-line
+* Bootstraping the database and creating an associated REST API instance (that will run on port 8110, see ```gradle.properties```)
+  is handled by the gradle plug-in [ml-gradle](https://github.com/rjrudin/marklogic-java/wiki/ml-gradle-Overview).
+  This allows you to execute from the command-line ```gradle mlDeploy``` initially,
+  the "deployment" also takes care of importing the required search options.
 
 
-### Maven
+### Gradle
 
 To compile and start the application you require a Java Development Kit (JDK 7) as well
-as [Maven](http://maven.apache.org/download.cgi) (version 3). 
+as [Gradle](http://www.gradle.org/).
 
 
 ### Bower
@@ -72,21 +75,23 @@ First you need to adjust the configuration file which holds specifics about
 how your MarkLogic server can be connected to, the easiest way is by copying
 the file and modifying the connection string according to your settings:
 
-    cp src/main/resources/application-sample.yml src/main/resources/application.yml
+    vi src/main/resources/application.yml
+
+NOTE: This will be refactored to make use of spring profiles in a future version.
 
 To give the sample web application a spin, check out the sources from github 
 and start the application directly from the command-line by executing:
 
-    mvn spring-boot:run
+    gradle bootRun
 
 If you want to open the sources with your favorite IDE, you might want to generate project files for Eclipse resp. IntelliJ IDEA with:
 
-    mvn eclipse:eclipse
-    mvn idea:idea
+    gradle eclipse
+    gradle idea
 
-To start the app in debug mode (Port 5005 in this example), run:
+To start the app in debug mode (Port 5005 by default), run:
 
-    mvn spring-boot:run -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"mvn spring-boot:run -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"mvn spring-boot:run -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
+    gradle bootRun --debug-jvm
 
 
 ### Interact with the REST endpoints
