@@ -149,9 +149,3 @@ Set it up under VM options in your IDE (make auto-compile after save is working)
 -->
 
 
-## Feedback
-
-In case of any questions or suggestions please get into 
-[contact with the author](mailto:niko[at]nava[dot]de)
-of course reporting issues or even contribute pull requests
-via github are highly welcome.
